@@ -1,0 +1,61 @@
+pipeline {
+    agent any
+    environment {
+         name = 'malik'
+    }     
+    stages {
+        stage('Enviroment Variables') {
+            environment {
+         username = 'obaid'
+         name = 'malik'
+    }
+            steps {
+                sh 'echo "${BUILD_ID}"'
+                sh 'echo "${name}"'
+                sh 'echo "${username}"'
+            }
+        }
+        stage('Test1') {
+            steps {
+                sh 'echo "${BUILD_ID}"'
+                sh 'echo "${name}"'
+                sh 'echo "${username}"'
+            }
+        }
+        stage('Runa a Command') {
+            steps {
+                sh '''
+                ls
+                pwd
+                date
+                whoami
+                '''
+            }    
+        }
+        stage('Continue ?') {
+            input {
+                message "should we continue?"
+                ok "yes we should"
+            }
+            steps {
+                echo 'Hello World'
+            }
+        }
+        stage('Test3') {
+            steps {
+                echo 'Hello World'
+            }
+        }
+    }    
+    post { 
+        always { 
+            echo 'I will always say Hello again!'
+        }
+        failure { 
+            echo 'I will say Hello if failed'
+        }
+        success { 
+            echo 'I will say Hello if successfull'
+        }    
+    }       
+}
